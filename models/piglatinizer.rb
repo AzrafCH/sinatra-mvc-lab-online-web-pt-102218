@@ -1,25 +1,42 @@
-class PigLatinize
+class PigLatinizer
+  attr_reader :text
 
-  def piglatinize(words)
-  word = words.split(" ")
-  word.map! {|w| to_pig_latin(w)}.join(" ")
-end
-
- def consonant?(char)
-  !char.match(/[aAeEiIoOuU]/)
-end
-
- def to_pig_latin(word)
-  if !consonant?(word[0])
-    word = word + "w"
-  elsif consonant?(word[0]) && consonant?(word[1]) && consonant?(word[2])
-    word = word.slice(3..-1) + word.slice(0,3)
-  elsif consonant?(word[0]) && consonant?(word[1])
-    word = word.slice(2..-1) + word.slice(0,2)
-  else
-    word = word.slice(1..-1) + word.slice(0)
+   def initialize(text)
+    @text = text.downcase
   end
-  word << "ay"
-end
 
+   def count_of_words
+    words = text.split(" ")
+    words.count
+  end
+
+   def count_of_vowels
+    text.scan(/[aeoui]/).count
+  end
+
+   def count_of_consonants
+    text.scan(/[bcdfghjklmnpqrstvwxyz]/).count
+  end
+
+   def most_used_letter
+    s1 = text.gsub(/[^a-z]/, '') # gets rid of spaces
+    arr = s1.split('')
+    arr1 = arr.uniq
+    arr2 = {}
+
+     arr1.map do |c|
+      arr2[c] =  arr.count(c)
+    end
+
+     biggest = { arr2.keys.first => arr2.values.first }
+
+     arr2.each do |key, value|
+      if value > biggest.values.first
+        biggest = {}
+        biggest[key] = value
+      end
+    end
+
+     biggest
+  end
 end
