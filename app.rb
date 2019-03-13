@@ -7,7 +7,7 @@ class App < Sinatra::Base
   end
 
   post '/' do
-  @piglatinized_text = TextAnalyzer.new(params[:user_text])
-  erb :results
-end
+    @piglatinized_text = TextAnalyzer.new(params[:user_text])
+    erb :results
+  end
 end
